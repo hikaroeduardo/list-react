@@ -1,38 +1,129 @@
 .App {
-  text-align: center;
+    width: 100%;
+    height: 100vh;
+    background-color: #42ACCD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.content {
+    width: 70vw;
+    height: 85vh;
+    background-color: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0px 0px 10px 2px #00000050;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+header {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #ccc;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+header .button {
+    width: 12rem;
 }
 
-.App-link {
-  color: #61dafb;
+.content-list {
+    width: 100%;
+    height: calc(100% - 6rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.list {
+    width: 70%;
+    height: 3rem;
+    background-color: #144857;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 0.8rem;
+}
+
+.list-item .icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.edit-update {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 0.8rem;
+    cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+    .list-item, .edit-update {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 950px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    header .button {
+        width: 10rem;
+    }
+
+    .edit-update h3 {
+        display: none;
+    }
+}
+
+@media (max-width: 650px) {
+    .content {
+        width: 85%;
+    }
+
+    header {
+        flex-direction: column;
+        gap: .5rem;
+        padding-bottom: 5rem;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+    }
+
+    header .button {
+        width: 100%;
+    }
+
+    .list-item {
+        gap: 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .list-item .icon {
+        height: 1rem;
+        font-size: 1rem;
+    }
+
+    .icon-menu {
+        font-size: 1.3rem;
+    }
+
+    .list {
+        height: 2.5rem;
+    }
 }
