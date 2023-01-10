@@ -1,31 +1,50 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "./components/Button";
 import { BsCheckSquare, BsCheckSquareFill } from "react-icons/bs";
 import { RiMenuUnfoldLine } from "react-icons/ri";
 import { Modal } from "./components/Modal";
+import { Api } from './services/Api';
 
-
-const fakeList = [
-  {
-    id: 1,
-    task: "Ir ao supermercado"
-  }
-];
+// const fakeList = [
+//   {
+//     id: 1,
+//     task: "Ir ao supermercado"
+//   }
+// ];
 
 
 function App() {
 
   const [modal, setModal] = useState(false);
+  const [item, setItem] = useState([]);
 
   function showModal() {
     setModal(true);
   };
-  
+
+  function closeModal() {
+    setModal(false);
+    loaderItems();
+  };
+
+  async function loaderItems() {
+    const data = await Api.get("/todos");
+
+    setItem(data.data);
+  };
+
+  useEffect(() => {
+    loaderItems();
+  },[]);
+
+
+// =========================================================================
+
   return (
     <div className="App">
 
-      {modal && <Modal />}
+      {modal && <Modal onClick={closeModal} />}
 
       <div className="content">
 
@@ -40,24 +59,27 @@ function App() {
 
         <div className="content-list">
 
+        {item.map((item) => (
           <div className="list">
 
             <div className="list-item">
-              <div>
-                <BsCheckSquare  className="icon" fontSize={23} />
-              </div>
+                <div>
+                    <BsCheckSquare  className="icon" fontSize={23} />
+                </div>
 
-              {fakeList.map((item) => (
-                <h3 key={item.id}>{item.task}</h3>
-              ))}
-            </div> {/* list-item */}
+                <h3 key={item.id}>{item.item}</h3>
 
-            <div className="edit-update">
+              </div> {/* list-item */}
+
+              <div className="edit-update">
                 <h3>Atualizar / Remover</h3>
                 <RiMenuUnfoldLine className="icon-menu" fontSize={25}/>
-            </div> {/* edit-update */}
+              </div> {/* edit-update */}
 
-          </div> {/* list */}
+            </div>
+        ))}
+
+          
 
         </div> {/* content-list */}
 

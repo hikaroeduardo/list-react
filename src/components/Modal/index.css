@@ -15,8 +15,7 @@
     background-color: #fff;
     padding: 3rem 2rem;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .text-close {
@@ -52,4 +51,11 @@
     outline: none;
     padding: 0 .5rem;
     font-size: .9rem;
+}
+
+.form-modal  {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
