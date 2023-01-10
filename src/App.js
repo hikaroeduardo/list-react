@@ -18,6 +18,7 @@ function App() {
 
   const [modal, setModal] = useState(false);
   const [item, setItem] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   function showModal() {
     setModal(true);
@@ -26,12 +27,18 @@ function App() {
   function closeModal() {
     setModal(false);
     loaderItems();
+    setSelectedItem(null);
   };
 
   async function loaderItems() {
     const data = await Api.get("/todos");
 
     setItem(data.data);
+  };
+
+  function editItem(item) {
+    showModal();
+    setSelectedItem(item);
   };
 
   useEffect(() => {
@@ -44,7 +51,7 @@ function App() {
   return (
     <div className="App">
 
-      {modal && <Modal onClick={closeModal} />}
+      {modal && <Modal itemTask={selectedItem} onClick={closeModal} />}
 
       <div className="content">
 
@@ -59,27 +66,25 @@ function App() {
 
         <div className="content-list">
 
-        {item.map((item) => (
-          <div className="list">
+          {item.map((item) => (
+            <div className="list" key={item.id}>
 
-            <div className="list-item">
-                <div>
-                    <BsCheckSquare  className="icon" fontSize={23} />
-                </div>
+              <div className="list-item">
+                  <div>
+                      <BsCheckSquare  className="icon" fontSize={23} />
+                  </div>
 
-                <h3 key={item.id}>{item.item}</h3>
+                  <h3>{item.item}</h3>
 
-              </div> {/* list-item */}
+                </div> {/* list-item */}
 
-              <div className="edit-update">
-                <h3>Atualizar / Remover</h3>
-                <RiMenuUnfoldLine className="icon-menu" fontSize={25}/>
-              </div> {/* edit-update */}
+                <div className="edit-update" onClick={() => editItem(item)}>
+                  <h3>Atualizar / Remover</h3>
+                  <RiMenuUnfoldLine className="icon-menu" fontSize={25}/>
+                </div> {/* edit-update */}
 
-            </div>
-        ))}
-
-          
+              </div> // list-item
+          ))}
 
         </div> {/* content-list */}
 

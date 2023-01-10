@@ -2,16 +2,17 @@ import "./index.css";
 import { Button } from "../Button";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Api } from "../../services/Api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export const Modal = ({onClick}) => {
+export const Modal = ({onClick, itemTask}) => {
 
-    const [input, setInput] = useState([])
+    const [input, setInput] = useState([]);
+    const [item, setItem] = useState("");
 
-    async function formSubmit(e) {
+    async function btnSubmit(e) {
         e.preventDefault();
 
-        const newTask = await Api.post("/todos", {
+        await Api.post("/todos", {
             id: Math.random(),
             item: input
         });
@@ -21,16 +22,32 @@ export const Modal = ({onClick}) => {
         onClick();
     };
 
+    async function removeItem(e) {
+        e.preventDefault();
+
+        await Api.delete(`/todos/${itemTask?.id}`);
+
+        alert("Item removido com sucesso!");
+
+        onClick();
+    };
+
+    useEffect(() => {
+        if(itemTask) {
+            setInput(itemTask?.item)
+        }
+    }, []);
+
 // =====================================================================
 
     return (
         <div className="modal">
 
             <div className="modal-content">
-                <form className="form-modal" onSubmit={formSubmit}>
+                <form className="form-modal">
                     <div className="modal-content-add-new-task">
                         <div className="text-close">
-                            <h2>Adicionar novo item:</h2>
+                            <h2>{itemTask ? "Editar / Remover item:" : "Adicionar novo item:"}</h2>
                             <AiFillCloseCircle className="icon-close" onClick={onClick} />
                         </div>
                         <input
@@ -41,9 +58,12 @@ export const Modal = ({onClick}) => {
                         />
                     </div>
 
-                    <Button>
-                        Adicionar
-                    </Button>
+                    {itemTask ? (
+                        <div>
+                            <Button>Atualizar</Button>
+                            <Button onClick={removeItem}>Remover</Button>
+                        </div>
+                    ) : <Button onClick={btnSubmit}>Adicionar</Button>}
                 </form>
 
             </div> {/* modal-content */}
