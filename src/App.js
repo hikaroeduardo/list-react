@@ -86,7 +86,7 @@ function App() {
         <div className="content-list">
 
           {item.map((item) => (
-            <div className="list" key={item.id}>
+            <div className={item.checked ? "list checked" : "list"} key={item.id}>
 
               <div className="list-item">
                 {item.checked ?
