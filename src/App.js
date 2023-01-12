@@ -19,6 +19,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [item, setItem] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [checked, setChecked] = useState(false);
 
   function showModal() {
     setModal(true);
@@ -39,6 +40,24 @@ function App() {
   function editItem(item) {
     showModal();
     setSelectedItem(item);
+  };
+
+  async function checkeditem(item) {
+    const updateData = await Api.put(`/todos/${item.id}`, {
+      item: item.item,
+      checked: true
+    })
+
+    closeModal()
+  };
+
+  async function noChekedItem(item) {
+    const updateData = await Api.put(`/todos/${item.id}`, {
+      item: item.item,
+      checked: false
+    })
+
+    closeModal()
   };
 
   useEffect(() => {
@@ -70,9 +89,14 @@ function App() {
             <div className="list" key={item.id}>
 
               <div className="list-item">
-                  <div>
-                      <BsCheckSquare  className="icon" fontSize={23} />
-                  </div>
+                {item.checked ?
+                (<div>
+                  <BsCheckSquareFill className="icon" fontSize={23} onClick={() => noChekedItem(item)}  />
+                </div>)
+                :
+                (<div>
+                  <BsCheckSquare className="icon" fontSize={23} onClick={() => checkeditem(item)} />
+                </div>)}
 
                   <h3>{item.item}</h3>
 

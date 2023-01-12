@@ -14,7 +14,8 @@ export const Modal = ({onClick, itemTask}) => {
 
         await Api.post("/todos", {
             id: Math.random(),
-            item: input
+            item: input,
+            checked: false
         });
 
         alert("Item adicionado!");
@@ -28,6 +29,18 @@ export const Modal = ({onClick, itemTask}) => {
         await Api.delete(`/todos/${itemTask?.id}`);
 
         alert("Item removido com sucesso!");
+
+        onClick();
+    };
+
+    async function updateItem(e) {
+        e.preventDefault();
+
+        await Api.put(`/todos/${itemTask?.id}`, {
+            item: input 
+        });
+
+        alert("Item atualizado com sucesso!");
 
         onClick();
     };
@@ -60,7 +73,7 @@ export const Modal = ({onClick, itemTask}) => {
 
                     {itemTask ? (
                         <div>
-                            <Button>Atualizar</Button>
+                            <Button onClick={updateItem}>Atualizar</Button>
                             <Button onClick={removeItem}>Remover</Button>
                         </div>
                     ) : <Button onClick={btnSubmit}>Adicionar</Button>}

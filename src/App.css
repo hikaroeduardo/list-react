@@ -37,6 +37,7 @@ header .button {
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    overflow: auto;
 }
 
 .list {
@@ -61,7 +62,12 @@ header .button {
     cursor: pointer;
     display: flex;
     align-items: center;
-    background-color: #fff;
+}
+
+.dotted {
+    text-decoration: line-through;
+    font-weight: 500;
+    background: #50C464;
 }
 
 .edit-update {
